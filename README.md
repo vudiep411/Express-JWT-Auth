@@ -1,5 +1,5 @@
 <h1  align="center">Express User Auth microservice</h1>
-<p  align="center">User authentication micro service using Express, Node.js, authorize and authenticate users using JWT(JsonWebToken). Register a user login and this service will return a jwt token back</p>
+<p  align="center">User authentication micro service using Express, Node.js, authorize and authenticate users using JWT (JsonWebToken). Register a user login and this service will return a jwt token back to the client side. User data will be saved in MongoDb</p>
 
 ## What's in here?
 *jwt* for authentication<br/>
