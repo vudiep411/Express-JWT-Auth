@@ -23,8 +23,8 @@
 {
    "firstName": "John",
    "lastName": "Doe",
-	"email" : "example@gmail.com",
-	"password" : "password"
+   "email" : "example@gmail.com",
+   "password" : "password"
 }
 ```
 
