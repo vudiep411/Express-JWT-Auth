@@ -1,28 +1,32 @@
-<h1  align="center">Express Node.js Template</h1>
-<p  align="center">This is a template to write REST API in express following MVC pattern</p>
+<h1  align="center">Express User Auth microservice</h1>
+<p  align="center">User authentication micro service using Express, Node.js, authorize and authenticate users using JWT(JsonWebToken). Register a user login and this service will return a jwt token back</p>
 
 ## What's in here?
-*DockerFile* if using docker<br/>
+*jwt* for authentication<br/>
 *mongoose* for mongodb (you can use different database service if you'd like) <br/>
 *nodemon* for development <br/>
+*bcrypt* hashing password with bcrypt <br/>
 
-## Folder Structure
-<p>Folder Structure for this template</p>
+## Routes
+/user/login POST<br/>
 
-### `controllers`
-Create your REST API logic functions in here. See [hello.js](/controllers/hello.js) for reference
+```javascript
+{
+	"email" : "example@gmail.com",
+	"password" : "password"
+}
+```
 
-### `middleware`
-Create your middleware functions here. For references, visit <a  href="https://expressjs.com/en/guide/using-middleware.html">Express middleware</a>
+/user/register <br/>
 
-### `models`
-Create your mongodb models here. See [model.js](/models/model.js) for reference
-
-### `routes`
-Create your REST API endpoints here. See [hello.js](/routes/hello.js) for reference
-
-### `index.js`
-This is the main file for the express server. This file will start the express app on a port of your choice in .env file.
+```javascript
+{
+   "firstName": "John",
+   "lastName": "Doe",
+	"email" : "example@gmail.com",
+	"password" : "password"
+}
+```
 
 ## Installation
 Follow the instructions below
