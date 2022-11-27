@@ -12,8 +12,8 @@
 
 ```javascript
 {
-	"email" : "example@gmail.com",
-	"password" : "password"
+   "email" : "example@gmail.com",
+   "password" : "password"
 }
 ```
 
