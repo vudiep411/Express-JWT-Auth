@@ -3,7 +3,7 @@
 
 ## What's in here?
 *jwt* for authentication<br/>
-*mongoose* for mongodb (you can use different database service if you'd like) <br/>
+*mongoose* for mongodb database(you can use different database service if you'd like) <br/>
 *nodemon* for development <br/>
 *bcrypt* hashing password with bcrypt <br/>
 
