@@ -8,7 +8,7 @@
 *bcrypt* hashing password with bcrypt <br/>
 
 ## Routes
-/user/login POST<br/>
+/user/login POST METHOD<br/>
 
 ```javascript
 {
@@ -17,7 +17,7 @@
 }
 ```
 
-/user/register <br/>
+/user/register POST METHOD<br/>
 
 ```javascript
 {
