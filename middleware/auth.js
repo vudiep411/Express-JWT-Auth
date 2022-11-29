@@ -3,15 +3,13 @@ import jwt from 'jsonwebtoken'
 const auth = async (req, res, next) => {
     try {
         const token = req.headers.authorization 
-        let decodedData
-        if(token) {
-            decodedData = jwt.verify(token, 'secret')
-            req.userId = decodedData.id
-        } else {
-            decodedData = jwt.decode(token)
-            req.userId = decodedData.sub
-        }
-        next()
+        jwt.verify(token, 'secret', (err, user) => {
+            if(err) 
+                return res.sendStatus(403)
+            
+            req.user = user
+            next()
+        })
     } catch (error) {
         console.log(error)
     }

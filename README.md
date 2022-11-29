@@ -27,6 +27,15 @@
    "password" : "password"
 }
 ```
+/test *authenticated* GET METHOD<br/>
+Set auth header<br/>
+```javascript
+{
+   "headers": {
+      "Authorization": "Your JWT token"
+   } 
+}
+```
 
 ## Installation
 Follow the instructions below
