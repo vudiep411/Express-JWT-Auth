@@ -19,9 +19,7 @@ app.get('/', (req, res) => {
     res.status(200).send("<h2>Welcome to Authenticated JWT with Express Node.js<h2>")
 })
 
-
 app.use('/user', userRoute)
-
 
 // Test authenticated route
 app.get('/test', auth, (req, res) => {
