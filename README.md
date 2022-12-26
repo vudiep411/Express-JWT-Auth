@@ -27,6 +27,11 @@
    "password" : "password"
 }
 ```
+
+/user/refresh POST METHOD<br/>
+
+<p>If cookies already have a refreshToken, this route will automatically generate a new refresh and access token</p>
+
 /test *authenticated* GET METHOD<br/>
 Set auth header<br/>
 ```javascript

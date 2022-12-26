@@ -1,6 +1,9 @@
 import User from '../models/user.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { generateAccessToken, generateRefreshtoken } from './token.js'
+
+let refreshTokens = []
 
 // Sign in
 export const signin = async (req, res) => {
@@ -17,7 +20,6 @@ export const signin = async (req, res) => {
             return res.json({message: "Invalid password"})
         }
 
-        const token = jwt.sign({ email: existingUser.email, id: existingUser._id}, 'secret', {expiresIn: "1h"})
         const authData = {
             _id: existingUser._id, 
             name: existingUser.name, 
@@ -25,7 +27,17 @@ export const signin = async (req, res) => {
             authenticated: true
         }
 
-        return res.status(200).json({...authData, token})
+        const token = generateAccessToken(authData)
+        const refreshToken = generateRefreshtoken(authData)
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure:false,
+            path: "/",
+            sameSite: "strict",            
+        })
+
+        return res.status(200).json({...authData, token, refreshToken})
     } catch (error) {
         res.status(500).json({message: 'Something went wrong.'})
     }
@@ -48,16 +60,61 @@ export const signup = async (req, res) => {
         const newUser = new User({name: name, email, password: hashPassword})
 
         // Create token to send it back
-        const token = jwt.sign({email: newUser.email, id: newUser._id}, 
-                'secret', {expiresIn: "1h"}
-        )
+        const token = generateAccessToken(newUser)
+        const refreshToken = generateRefreshtoken(newUser)
+
         await newUser.save()
 
-        return res.status(200).json({result: newUser, token})
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure:false,
+            path: "/",
+            sameSite: "strict",            
+        })
+
+        return res.status(200).json({result: newUser, token, refreshToken})
 
     } catch (error) {
         console.log(error)
         return res.status(500).json({message: 'Something went wrong.'})
     }
    
+}
+
+
+// refresh token
+export const refresh = async (req, res) => {
+    const refreshToken = req.cookies.refreshToken
+
+    if(!refreshToken)
+        return res.status(401).json("Unauthenticated")
+
+    if(!refreshTokens.includes(refreshToken))
+        return res.status(403).json("Forbidden, refresh token is invalid")
+
+    jwt.verify(refreshToken, process.env.SECRET, (err, user) => {
+        if(err) {
+            console.log(err)
+        }
+
+        refreshTokens.filter(token => token !== refreshToken)
+
+        const newRefreshToken = generateRefreshtoken(user)
+        const newAccessToken = generateAccessToken(user)
+
+        refreshTokens(newRefreshToken)
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure:false,
+            path: "/",
+            sameSite: "strict",
+        });
+
+        res.status(200).json({
+            token: newAccessToken,
+            refreshToken: newRefreshToken
+        })        
+        
+    })
 }
